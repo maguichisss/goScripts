@@ -2,6 +2,18 @@ package main
 
 import "fmt"
 
+// INSTALL https://golang.org/doc/install?download=go1.12.6.linux-amd64.tar.gz
+
+/*
+go build tutorial.go
+./tutorial
+
+go build -o executableName.exe tutorial.go
+./executableName.exe
+
+go run tutorial.go
+*/
+
 func main() {
     ejemplo_print()
     ejemplo_for()
