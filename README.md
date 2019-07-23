@@ -8,6 +8,7 @@
  ./tutorial
 
  go build -o executableName.exe tutorial.go
+
  ./executableName.exe
 
  go run tutorial.go
