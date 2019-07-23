@@ -153,6 +153,8 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+    // go run dbExample.go
+    // en el navegador ir a http://localhost:8080
     log.Println("Server started on: http://localhost:8080")
     http.HandleFunc("/", Index)
     http.HandleFunc("/show", Show)
