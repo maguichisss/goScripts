@@ -2,22 +2,27 @@ package main
 
 import "fmt"
 import (
-    "log"
     "os"
     "io"
+    "log"
+    "regexp"
+    "strings"
     "io/ioutil"
 )
 
+// go run tutorial.go argumento_1 argumento_2 argumento_3
+
 func main() {
     ejemplo_print()
-    fmt.Printf("\n\n")
     ejemplo_for()
-    fmt.Printf("\n\n")
     ejemplo_array()
-    fmt.Printf("\n\n")
     ejemplo_logs()
-    fmt.Printf("\n\n")
     ejemplo_files()
+    argumentos(os.Args)
+    fmt.Println(func_arguments([]float64{1.123, 4.333, 27.0/5}))
+    concatenar()
+    regex_tests()
+
 }
 
 func ejemplo_print(){
@@ -142,4 +147,61 @@ func ejemplo_files(){
         fmt.Println(err.Error())
     }
     fmt.Println("File Deleted")
+}
+
+func argumentos(args []string){
+    fmt.Printf("\t\t\tARGUMENTOS DE SCRIPT\n\n")
+    // go run tutorial.go argumento_1 argumento_2 argumento_3 123
+    argsWithFilePath := args
+    argsWithoutPath  := args[1:]
+    arg              := args[1]
+
+    fmt.Println(argsWithFilePath)
+    fmt.Println(argsWithoutPath)
+    fmt.Println(arg)
+}
+
+func func_arguments(arrayFloat []float64) float64{
+    fmt.Printf("\t\t\tARGUMENTOS DE FUNCION\n\n")
+    total := 0.0
+    for _, v := range arrayFloat {
+        total += v
+    }
+    promedio := total / float64(len(arrayFloat))
+    fmt.Printf("%0.5f\n",promedio)
+    return total / float64(len(arrayFloat))
+}
+
+func concatenar(){
+    fmt.Printf("\t\t\tCONCATENAR ARRAR DE STRINGS (JOIN)\n\n")
+    frase := []string{"Una","vaca","vestida","de","uniforme"}
+    fmt.Println(strings.Join(frase, " "))
+}
+
+
+func regex_tests(){
+    fmt.Printf("\t\t\tREGEX\n\n")
+    // ejemplo 1
+    match, _ := regexp.MatchString("p([a-z]+)ch", "peach")
+    fmt.Println(match)
+    // ejemplo 2
+    match, _ = regexp.MatchString("p([a-z]+)ch", "NOMATCH")
+    fmt.Println(match)
+
+    // ejemplo 3
+    html := `<div id="img-preload" style="display: none;">
+        <img src="https://i.ytimg.com/vi/nNBaEkjtupA/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&amp;rs=AOn4CLB4yn_D3J7M2eeWzw_OMEw96OgAbg">
+        <img src="https://i.ytimg.com/vi/c5G9g7qXUns/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&amp;rs=AOn4CLC7htsUDo3iFp-j8ONttBAvJZkd9w">
+        <img src="https://i.ytimg.com/vi/_7j5Tcbo9Zc/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&amp;rs=AOn4CLDYJBicKVQAGn0yabfJWg3G3pRWSw">
+        <img src="https://i.ytimg.com/vi/TAAXwrgd1U8/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&amp;rs=AOn4CLBMesiqQ1dWWPdy7wyTOcBqog3XBA">
+        <img src="https://i.ytimg.com/vi/YfRy9j1E0Qk/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&amp;rs=AOn4CLCg0tkKTndW8nmkUB5Xg-u_S2845w">
+    </div>`
+    getSrc := "(https.+jpg)"
+    r, _ := regexp.Compile(getSrc)
+    fmt.Println(r.FindAllString(html, 3)) // segundo argumendo es el numero de matchs a retornar
+
+    // ejemplo 4
+    r1, _ := regexp.Compile("NOMATCH")
+    fmt.Println(r1.FindAllString(html, -1)) // -1 regresa todos los matches
+
 }
